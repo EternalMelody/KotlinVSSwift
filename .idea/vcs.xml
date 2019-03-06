@@ -2,5 +2,66 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/clone" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Alerter" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Colorful" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Context-Menu.Android" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/DBFlow" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Design-Patterns-In-Kotlin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Exposed" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Fotoapparat" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Kotlin-Tutorials" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Kotlin-for-Android-Developers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/KotlinMvp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/MultiType" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/MvRx" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/RxBinding" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/RxDownload" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/RxKotlin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/SuperSLiM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/Timeline-View" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/TourGuide" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/TranslationPlugin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/ViewPagerTransforms" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/aesthetic" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/android-UniversalMusicPlayer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/android-architecture-components" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/android-clean-architecture-boilerplate" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/android-sunflower" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/android-topeka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/anko" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/arrow" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/awesome-kotlin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/corda" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/dexcount-gradle-plugin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/flexbox-layout" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/fuel" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/gradle-play-publisher" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/intellij-rainbow-brackets" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/intellij-rust" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/iosched" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/javalin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/koin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/kotlin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/kotlin-dsl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/kotlin-examples" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/kotlin-koans" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/kotlin-native" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/kotlinx.coroutines" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/kotterknife" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/ktlint" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/ktor" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/material-dialogs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/muzei" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/okio" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/p3c" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/plaid" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/profile-summary-for-github" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/shadowsocks-android" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/sourcerer-app" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/sqldelight" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/tachiyomi" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/repos/kotlin/tornadofx" vcs="Git" />
   </component>
 </project>
