@@ -14,7 +14,9 @@ fun main() {
 
 fun downloadRepos(language:String){
     val client = GitHubClient()
-    val service = RepositoryService()
+    client.setCredentials("EternalMelody", "1ca6284b90fc1e7384faa90240f8fa8e5bf9cded")
+
+    val service = RepositoryService(client)
     val repos = service.searchRepositories("sort:stars", language)
     repos.forEach {
         val repo = service.getRepository(it.owner, it.name)
