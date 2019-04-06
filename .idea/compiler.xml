@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="MARIOANDHIKA.KotlinVSSwift.main" target="8" />
+      <module name="MARIOANDHIKA.KotlinVSSwift.test" target="8" />
+      <module name="MARIOANDHIKA.repo.main" target="8" />
+      <module name="MARIOANDHIKA.repo.test" target="8" />
+      <module name="MARIOANDHIKA.repoDown.main" target="8" />
+      <module name="MARIOANDHIKA.repoDown.test" target="8" />
+      <module name="MARIOANDHIKA.repoDownloade.main" target="8" />
+      <module name="MARIOANDHIKA.repoDownloade.test" target="8" />
+      <module name="MARIOANDHIKA.repoDownloader.main" target="8" />
+      <module name="MARIOANDHIKA.repoDownloader.test" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
