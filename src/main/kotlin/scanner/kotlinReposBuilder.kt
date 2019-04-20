@@ -1,7 +1,15 @@
-package preparer
+package scanner
+import REPO_PATH
+import findChild
+import logListToFile
+import runCommand
 import java.io.File
 
 fun main() {
+    buildKotlinRepos()
+}
+
+fun buildKotlinRepos() {
     val parentFolder = File("$REPO_PATH/kotlin_repos/")
     val children = parentFolder.listFiles()
     val projectFolders = children.filter {

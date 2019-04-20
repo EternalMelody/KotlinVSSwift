@@ -1,34 +1,30 @@
 package analyzer
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.sun.org.apache.bcel.internal.Repository.addClass
+import poko.CodeSmellData
+import poko.PairedTTestRow
+import javafx.geometry.Side
 import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
-import javafx.scene.layout.Priority
-import javafx.scene.text.FontWeight
+import javafx.scene.paint.Color
 import org.apache.commons.math3.stat.inference.TTest
 import org.nield.kotlinstatistics.median
 import org.nield.kotlinstatistics.standardDeviation
-import org.nield.kotlinstatistics.sumBy
+import readJSON
 import tornadofx.*
-import tornadofx.DrawerStyles.Companion.drawer
-import tornadofx.Stylesheet.Companion.root
-import java.io.File
 import kotlin.collections.set
 
 const val DEFAULT_SPACING = 8.0
 
 class MyView : View("Kotlin vs Swift") {
-    private val kotlinData = readData("kotlinData.json")
+    private val kotlinData = readJSON("kotlinDataProcessed.json")
     private val kotlinMap = mapData(kotlinData)
-    private val swiftData = readData("swiftData.json")
+    private val swiftData = readJSON("swiftDataProcessed.json")
     private val swiftMap = mapData(swiftData)
     private val kotlinNcloc = kotlinData.list.map { Pair(it.component.name, it.ncloc) }
     private val swiftNcloc = swiftData.list.map { Pair(it.component.name, it.ncloc) }
 
-    override val root = drawer {
-        item("Sum") {
+    override val root = drawer (side = Side.TOP) {
+        item("Sum", expanded = true) {
             vbox {
                 linechart("Code smell sum chart", CategoryAxis(), NumberAxis()){
                     series("Kotlin") {
@@ -53,6 +49,11 @@ class MyView : View("Kotlin vs Swift") {
                                     label(it.value.sum().toString())
                                 }
                             }
+                            vbox(DEFAULT_SPACING) {
+                                addClass(MyStyles.bordered)
+                                label("Total")
+                                label("${kotlinMap.values.sumBy { it.sum() }}")
+                            }
                         }
                     }
                     vbox(DEFAULT_SPACING) {
@@ -64,6 +65,11 @@ class MyView : View("Kotlin vs Swift") {
                                     label(it.key)
                                     label(it.value.sum().toString())
                                 }
+                            }
+                            vbox(DEFAULT_SPACING) {
+                                addClass(MyStyles.bordered)
+                                label("Total")
+                                label("${swiftMap.values.sumBy { it.sum() }}")
                             }
                         }
                     }
@@ -199,7 +205,7 @@ class MyView : View("Kotlin vs Swift") {
             }
         }
 
-        item("NCLOC Table", expanded = true) {
+        item("NCLOC Table") {
             vbox(DEFAULT_SPACING) {
                 tableview(kotlinNcloc.observable()){
                     readonlyColumn("Kotlin Projects", Pair<String, Int>::first)
@@ -239,37 +245,32 @@ class MyView : View("Kotlin vs Swift") {
         }
 
         item("Paired T-Test") {
+            val tTest = TTest()
+            val tableData = kotlinMap.map {
+                val kListE = it.value.padWithZeros(kotlinData.list.size)
+                val sListE = swiftMap[it.key]!!.padWithZeros(swiftData.list.size)
+                val kArray = kListE.map { it.toDouble() }.toDoubleArray()
+                val sArray = sListE.map { it.toDouble() }.toDoubleArray()
 
-            val kotlinDoubleList = kotlinMap.values.map { it.sumByDouble { it.toDouble() } }.toMutableList()
-            kotlinDoubleList.addAll((0 until swiftMap.values.size - kotlinMap.values.size).map {0.0})
-            val kotlinDoubleArray = kotlinDoubleList.toDoubleArray()
-            val swiftDoubleArray = swiftMap.values.map { it.sumByDouble { it.toDouble() }}.toDoubleArray()
+                val p = tTest.pairedTTest(kArray, sArray)
+                val t = tTest.pairedT(kArray, sArray)
+                val meanOfTheDiff = kArray.mapIndexed { index, d -> d - sArray[index] }.average()
 
-            vbox(DEFAULT_SPACING) {
-                val table = swiftMap.map {
-                    val kotlinValue = ((kotlinMap[it.key]?.sum())?:0)
-                    val swiftValue = it.value.sum()
-                    CodeSmellTableRow(it.key,kotlinValue,swiftValue,kotlinValue - swiftValue)
-                }
-                tableview(table.observable()){
-                    readonlyColumn("Code Smell", CodeSmellTableRow::name)
-                    readonlyColumn("Kotlin", CodeSmellTableRow::kotlin)
-                    readonlyColumn("Swift", CodeSmellTableRow::swift)
-                    readonlyColumn("Diff", CodeSmellTableRow::diff)
-                }
+                PairedTTestRow(it.key, t, p, meanOfTheDiff)
+            }.sortedBy{ it.p }
 
-                hbox(DEFAULT_SPACING) {
-                    vbox(DEFAULT_SPACING) {
-                        addClass(MyStyles.bordered)
-                        label("p-value")
-                        label("${TTest().pairedTTest(kotlinDoubleArray, swiftDoubleArray)}")
-                    }
-                    vbox (DEFAULT_SPACING){
-                        addClass(MyStyles.bordered)
-                        label("T")
-                        label("${TTest().pairedT(kotlinDoubleArray, swiftDoubleArray)}")
+            tableview(tableData.observable()) {
+                readonlyColumn("Code Smell Type", PairedTTestRow::name)
+                readonlyColumn("T", PairedTTestRow::t)
+                readonlyColumn("p", PairedTTestRow::p).cellFormat {
+                    text = item.toString()
+                    style {
+                        if (item > 0.05) {
+                            textFill = Color.RED
+                        }
                     }
                 }
+                readonlyColumn("Mean of the Diff", PairedTTestRow::meanOfTheDiff)
             }
         }
     }
@@ -288,21 +289,24 @@ class MyView : View("Kotlin vs Swift") {
         return map
     }
 
-    private fun readData(filename:String):CodeSmellData {
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory()).build()
-        val jsonAdapter = moshi.adapter(CodeSmellData::class.java).indent("\t")
-        return jsonAdapter.fromJson(File("data/$filename").readText())!!
-    }
-
     init {
         with (root) {
-            prefWidth = 1200.0
-            prefHeight = 900.0
+            prefWidth = 1280.0
+            prefHeight = 800.0
+            style {
+                fontSize = Dimension(14.0, Dimension.LinearUnits.pt)
+            }
         }
     }
 
     private fun Double.toString(fracDigits:Int):String {
         return String.format("%.${fracDigits}f", this)
+    }
+
+    private fun List<Int>.padWithZeros(desiredSize: Int): List<Int> {
+        val output = mutableListOf<Int>()
+        output.addAll(this)
+        (0 until desiredSize - this.size).forEach { output.add(0) }
+        return output
     }
 }

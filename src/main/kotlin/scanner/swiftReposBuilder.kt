@@ -1,8 +1,16 @@
-package preparer
+package scanner
 
+import REPO_PATH
+import findChild
+import logListToFile
+import runCommand
 import java.io.File
 
 fun main() {
+    buildSwiftRepos()
+}
+
+fun buildSwiftRepos() {
     val parentFolder = File("$REPO_PATH/swift_repos/")
     val children = parentFolder.listFiles()
     val projectFolders = children.filter {
@@ -13,18 +21,15 @@ fun main() {
     val xcworkspaceFiles = mutableListOf<File>()
     val packageSwiftFiles = mutableListOf<File>()
 
+    val successfulXcworkspaceBuilds = mutableListOf<File>()
+    val successfulXcodeprojBuilds = mutableListOf<File>()
+    val successfulPackageSwiftBuilds = mutableListOf<File>()
+
     projectFolders.forEach {
         xcworkspaceFiles.addAll(it.findChild(Regex(".*\\.xcworkspace")))
         xcodeprojFiles.addAll(it.findChild(Regex(".*\\.xcodeproj")))
         packageSwiftFiles.addAll(it.findChild(Regex("^package.swift\$",RegexOption.IGNORE_CASE)))
     }
-
-    val successfulXcworkspaceBuilds = mutableListOf<File>()
-    val successfulXcodeprojBuilds = mutableListOf<File>()
-    val successfulPackageSwiftBuilds = mutableListOf<File>()
-    val failedXcworkspaceBuilds = mutableListOf<File>()
-    val failedXcodeprojBuilds = mutableListOf<File>()
-    val failedPackageSwiftBuilds = mutableListOf<File>()
 
     xcodeprojFiles.forEach{
         try {
@@ -33,7 +38,6 @@ fun main() {
             successfulXcodeprojBuilds.add(it)
         } catch (e:Exception) {
             println("Failed to build $it")
-            failedXcodeprojBuilds.add(it)
         }
     }
     xcworkspaceFiles.forEach {
@@ -43,7 +47,6 @@ fun main() {
             successfulXcworkspaceBuilds.add(it)
         } catch (e:Exception) {
             println("Failed to build $it")
-            failedXcworkspaceBuilds.add(it)
         }
     }
     packageSwiftFiles.forEach{
@@ -53,7 +56,6 @@ fun main() {
             successfulPackageSwiftBuilds.add(it)
         } catch (e:Exception) {
             println("Failed to build $it")
-            failedPackageSwiftBuilds.add(it)
         }
     }
 
@@ -67,4 +69,3 @@ fun main() {
         "${successfulPackageSwiftBuilds.size} swift packages successfully built\n",
         successfulPackageSwiftBuilds)
 }
-

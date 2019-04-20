@@ -1,5 +1,7 @@
-package preparer
-
+import com.github.kittinunf.fuel.core.extensions.authentication
+import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.moshi.moshiDeserializerOf
+import poko.SystemHealthResponse
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -10,7 +12,7 @@ fun String.runCommand(workingDir: File) {
         .redirectOutput(ProcessBuilder.Redirect.INHERIT)
         .redirectError(ProcessBuilder.Redirect.INHERIT)
         .start()
-        .waitFor(60, TimeUnit.MINUTES)
+        .waitFor(72, TimeUnit.HOURS)
 }
 
 fun logListToFile(filename: String, header: String, fileList: List<File>) {
@@ -38,4 +40,18 @@ fun File.findChild(regex: Regex): List<File> {
         }
     }
     return output
+}
+
+fun sonarQubeCheck(): Boolean {
+    val response = "http://localhost:9000/api/system/health"
+        .httpGet()
+        .authentication()
+        .basic("admin", "admin")
+        .responseObject(moshiDeserializerOf(SystemHealthResponse::class.java))
+    return if (response.third.component1()?.health == "GREEN") {
+        true
+    } else {
+        println("SonarQube is not operational. Please ensure that SonarQube server is started, and is in good health.")
+        false
+    }
 }

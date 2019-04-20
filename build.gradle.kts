@@ -29,8 +29,6 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.8.0")
     compile("org.nield:kotlin-statistics:1.2.1")
-    compile("de.mpicbg.scicomp:krangl:0.11")
-    compile("com.github.holgerbrandl:kravis:0.5")
     compile("no.tornado:tornadofx:1.7.18")
     compile("org.apache.commons:commons-math3:3.6.1")
 }

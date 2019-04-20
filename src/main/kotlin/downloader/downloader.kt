@@ -1,5 +1,9 @@
-package preparer
+package downloader
 
+import GITHUB_PERSONAL_ACCESS_TOKEN
+import GITHUB_USERNAME
+import REPO_COUNT
+import REPO_PATH
 import org.apache.log4j.BasicConfigurator
 import org.eclipse.egit.github.core.client.GitHubClient
 import org.eclipse.egit.github.core.service.RepositoryService
@@ -14,7 +18,8 @@ fun main(args: Array<String>) {
 
 fun downloadRepos(language:String){
     val client = GitHubClient()
-    client.setCredentials("EternalMelody", "1ca6284b90fc1e7384faa90240f8fa8e5bf9cded")
+
+    client.setCredentials(GITHUB_USERNAME, GITHUB_PERSONAL_ACCESS_TOKEN)
 
     val service = RepositoryService(client)
     val repos = service.searchRepositories("sort:stars", language)

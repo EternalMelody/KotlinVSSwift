@@ -1,11 +1,11 @@
-package preparer
+package scanner
 
+import REPO_PATH
 import java.io.File
 
 fun main() {
 //    generateProjectProperties("kotlin")
 //    generateProjectProperties("swift")
-    generateProjectProperties("python")
 }
 
 fun generateProjectProperties(language:String) {

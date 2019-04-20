@@ -12,6 +12,8 @@
       <module name="MARIOANDHIKA.repoDownloade.test" target="8" />
       <module name="MARIOANDHIKA.repoDownloader.main" target="8" />
       <module name="MARIOANDHIKA.repoDownloader.test" target="8" />
+      <module name="repoPreparer.main" target="1.8" />
+      <module name="repoPreparer.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

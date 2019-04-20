@@ -1,19 +1,23 @@
-package analyzer
+package preprocessor
 
+import poko.CodeSmellData
+import poko.Component
+import poko.Issue
+import poko.IssueSearchResponse
+import poko.MeasuresComponentResponse
+import poko.ProjectInfo
+import poko.ProjectSearchResponse
 import com.github.kittinunf.fuel.core.extensions.authentication
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.moshi.moshiDeserializerOf
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import java.io.File
+import saveJSON
 
 fun main() {
-//    retrieveData("kotlin")
+    retrieveData("kotlin")
     retrieveData("swift")
 }
 
-private fun retrieveData(language: String) {
-
+fun retrieveData(language: String) {
     val projects = getProjects(language)
     val data = CodeSmellData(projects.map { component ->
         val codeSmells = getCodeSmells(component.key)
@@ -27,20 +31,10 @@ private fun retrieveData(language: String) {
 
         val ncloc = getNcloc(component.key)
 
-        ProjectInfo(component,tags, ncloc)
+        ProjectInfo(component, tags, ncloc)
     })
 
-    saveData(data, "${language}Data")
-}
-
-private fun saveData(data: CodeSmellData, filename: String) {
-    val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory()).build()
-    val jsonAdapter = moshi.adapter(CodeSmellData::class.java).indent("\t")
-    File("data").mkdir()
-    File("data/$filename.json").bufferedWriter().use {
-        it.write(jsonAdapter.toJson(data))
-    }
+    saveJSON(data, "${language}Data")
 }
 
 private fun getProjects(language: String): List<Component> {
@@ -103,8 +97,8 @@ private fun getNcloc(projectKey: String): Int {
     val measures = responseObject.third.component1()?.component?.measures
 
     if (measures != null) {
-        if (measures.size > 0) {
-            return measures.get(0).value ?: 0
+        if (measures.isNotEmpty()) {
+            return measures[0].value ?: 0
         }
     }
     return 0
